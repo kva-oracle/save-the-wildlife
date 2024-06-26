@@ -10,8 +10,12 @@ steps:
     shell: bash
     timeoutInSeconds: 300
     command: |
-      yum --disablerepo=ol7_oci_included install -y oracle-nodejs-release-el7 oracle-release-el7
-      yum --disablerepo=ol7_oci_included install -y nodejs
+      cat /etc/oracle-release
+      dnf config-manager --set-disabled ol7_oci_included
+      yum repolist all
+      yum install -y nodejs
+      dnf config-manager --set-enabled ol7_oci_included
+      yum repolist all
   - type: Command
     name: "Git Clone"
     shell: bash
